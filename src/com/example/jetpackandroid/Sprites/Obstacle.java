@@ -10,22 +10,19 @@ public class Obstacle {
 	private Rect rect = new Rect();
 	private int width, height, x, y;
 	
+	private final int HEIGHT = 25;
+	private final int SPAWN_Y = -100;
 	
-	public Obstacle(int x){
-		height = 25;
+	
+	public Obstacle(int x, int numObstaclesPerRow){
+		height = HEIGHT;
 		this.x = x;
-		y = -100;
-		width = (int)GamePanel.Width / 10;
+		y = SPAWN_Y;
+		width = (int)GamePanel.Width / numObstaclesPerRow;
 		paint.setColor(Color.GREEN);
 	}
 	
-	
-	public int getX(){ return x; }
-	public int getY(){ return y; }
-	public int getWidth(){ return width; }
-	public int getHeight(){ return height; }
-	
-	
+		
 	public void initialize(){
 		rect.set(x, y, x + width, y + height);
 	}
@@ -40,4 +37,10 @@ public class Obstacle {
 	public void draw(Canvas canvas){
 		canvas.drawRect(rect, paint);
 	}
+	
+	
+	public int getX(){ return x; }
+	public int getY(){ return y; }
+	public int getWidth(){ return width; }
+	public int getHeight(){ return height; }
 }

@@ -92,7 +92,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 				if(i == (OBSTACLESPOTS - 1) && !containsHole)
 					continue;
 				if(random.nextInt(OBSTACLESPOTS) < obstacleChance){
-					Obstacle newObstacle = new Obstacle(obstacleX);
+					Obstacle newObstacle = new Obstacle(obstacleX, OBSTACLESPOTS);
 					newObstacle.initialize();
 					obstacles.add(newObstacle);
 				}
