@@ -1,4 +1,6 @@
-package com.example.jetpackandroid;
+package com.chrisperko.jetpackandroid;
+
+import com.example.jetpackandroid.R;
 
 import android.os.Bundle;
 import android.app.Activity;

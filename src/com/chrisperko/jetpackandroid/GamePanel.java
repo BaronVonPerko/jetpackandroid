@@ -1,9 +1,12 @@
-package com.example.jetpackandroid;
+package com.chrisperko.jetpackandroid;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import com.example.jetpackandroid.Sprites.Obstacle;
+
+import com.chrisperko.jetpackandroid.Sprites.Obstacle;
+import com.example.jetpackandroid.R;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

@@ -1,4 +1,4 @@
-package com.example.jetpackandroid;
+package com.chrisperko.jetpackandroid;
 
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;

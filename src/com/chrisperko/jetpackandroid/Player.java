@@ -1,4 +1,4 @@
-package com.example.jetpackandroid;
+package com.chrisperko.jetpackandroid;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
