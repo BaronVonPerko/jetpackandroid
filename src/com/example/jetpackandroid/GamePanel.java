@@ -30,17 +30,18 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 	private Bitmap playerBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
 	private Bitmap pauseBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.pause);
 	
-	public void setMoney(int money){
-		this.money = money;
-	}
-	
-	public int getMoney() { return money; }
+	private final int PAUSEWIDTH = 100;
+	private final int PAUSEHEIGHT = 110;
+	private final int INITGAMESPEED = 8;
+	private final int TEXTSIZE = 34;
+	private final int OBSTACLESPOTS = 10;
+
 
 	public GamePanel(Context context) {
 		super(context);
-		GameSpeed = 8;
+		GameSpeed = INITGAMESPEED;
 		scorePaint.setColor(Color.WHITE);
-		scorePaint.setTextSize(34);
+		scorePaint.setTextSize(TEXTSIZE);
 		getHolder().addCallback(this); // Allow access to the SurfaceHolder
 		gameThread = new GameThread(this);
 	}
@@ -66,7 +67,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 		canvas.drawText("Score: " + player.getScore(), 0, 30, scorePaint);
 		canvas.drawText("testing : " + money, 0, 60, scorePaint);
 		pauseBitmap = Bitmap.createScaledBitmap(pauseBitmap, 80, 80, true);
-		canvas.drawBitmap(pauseBitmap, Width - 100, 10, null);
+		canvas.drawBitmap(pauseBitmap, Width - PAUSEWIDTH, 10, null);
 	}
 	
 	public void update(Canvas canvas){
@@ -87,16 +88,16 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 			int obstacleX = 0;
 			int obstacleChance = 6; // Increase to make more obstacles appear
 			boolean containsHole = false;
-			for(int i=0; i < 10; i++){
-				if(i==9 && !containsHole)
+			for(int i=0; i < OBSTACLESPOTS; i++){
+				if(i == (OBSTACLESPOTS - 1) && !containsHole)
 					continue;
-				if(random.nextInt(10) < obstacleChance){
+				if(random.nextInt(OBSTACLESPOTS) < obstacleChance){
 					Obstacle newObstacle = new Obstacle(obstacleX);
 					newObstacle.initialize();
 					obstacles.add(newObstacle);
 				}
 				else{ containsHole = true; }
-				obstacleX += Width / 10;
+				obstacleX += Width / OBSTACLESPOTS;
 			}
 		}
 		
@@ -168,7 +169,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 			if(gameThread.getIsPaused())
 				gameThread.togglePaused();
 			
-			if(!gameThread.getIsPaused() && event.getX() > Width - 100 && event.getY() < 110)
+			if(!gameThread.getIsPaused() && event.getX() > Width - PAUSEWIDTH && event.getY() < PAUSEHEIGHT)
 				gameThread.togglePaused();
 			
 			if(!gameThread.getIsPaused())
@@ -193,5 +194,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 		
 		return false;
 	}	
+	
+	
+	
+	public void setMoney(int money){ this.money = money; }	
+	public int getMoney() { return money; }
 	
 }
