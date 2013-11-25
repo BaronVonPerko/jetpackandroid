@@ -16,11 +16,18 @@ public class Player {
 	private boolean isMoving, isFalling;
 	private int score;
 	
+	private final int INITSPEEDX = 12;
+	private final int INITSPEEDY = 7;
+	
+	private enum Direction{
+		RIGHT, LEFT, NONE
+	}
+	
 	public Player(Bitmap bitmap){
 		x = ((int)GamePanel.Width / 2) - (bitmap.getWidth() / 2);
 		y = ((int)GamePanel.Height / 2) - (bitmap.getHeight() / 2);
-		speedX = 12;
-		speedY = 7;
+		speedX = INITSPEEDX;
+		speedY = INITSPEEDY;
 		score = 0;
 		isMoving = false;
 		isFalling = false;
@@ -28,21 +35,8 @@ public class Player {
 		this.bitmap = bitmap;
 		centerX = bitmap.getWidth() / 2;
 		centerY = bitmap.getHeight() / 2;
-	}
+	}	
 	
-	private enum Direction{
-		RIGHT, LEFT, NONE
-	}
-	
-	public int getX(){ return x; }
-	public int getY(){ return y; }
-	public int getSpeedX(){ return speedX; }
-	public int getSpeedY(){ return speedY; }
-	public int getWidth(){ return bitmap.getWidth(); }
-	public int getHeight(){ return bitmap.getHeight(); }	
-	public int getScore() { return score; }
-	
-	public void setPosition(int x, int y){ this.x = x; this.y = y; }
 	
 	public void updateMoveDirection(int inputX){
 		isMoving = true;
@@ -51,15 +45,8 @@ public class Player {
 			moveDirection = Direction.RIGHT;
 		else
 			moveDirection = Direction.LEFT;
-	}
+	}	
 	
-	public void stopMoving(){
-		isMoving = false;
-	}
-	
-	public void setIsFalling(boolean isFalling){
-		this.isFalling = isFalling;
-	}
 	
 	public void update(){
 		score++;
@@ -99,4 +86,23 @@ public class Player {
 		Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
 		canvas.drawBitmap(rotatedBitmap, x, y, null);
 	}
+	
+	
+	public void stopMoving(){
+		isMoving = false;
+	}
+	
+	public void setIsFalling(boolean isFalling){
+		this.isFalling = isFalling;
+	}
+	
+	
+	public int getX(){ return x; }
+	public int getY(){ return y; }
+	public int getSpeedX(){ return speedX; }
+	public int getSpeedY(){ return speedY; }
+	public int getWidth(){ return bitmap.getWidth(); }
+	public int getHeight(){ return bitmap.getHeight(); }	
+	public int getScore() { return score; }	
+	public void setPosition(int x, int y){ this.x = x; this.y = y; }
 }
