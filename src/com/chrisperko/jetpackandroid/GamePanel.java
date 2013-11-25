@@ -62,7 +62,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 			player = new Player(playerBitmap);
 		
 		// Draw all obstacles
-		List<Obstacle> obstaclesToRemove = new ArrayList<Obstacle>();
 		for(Obstacle obstacle : obstacles){
 			obstacle.draw(canvas);
 		}
