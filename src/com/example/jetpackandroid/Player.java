@@ -10,7 +10,7 @@ public class Player {
 	
 	private int x, y;
 	private int speedX, speedY;
-	private String moveDirection;
+	private Direction moveDirection;
 	private Bitmap bitmap;
 	private int centerX, centerY;
 	private boolean isMoving, isFalling;
@@ -24,10 +24,14 @@ public class Player {
 		score = 0;
 		isMoving = false;
 		isFalling = false;
-		moveDirection = "";
+		moveDirection = Direction.NONE;
 		this.bitmap = bitmap;
 		centerX = bitmap.getWidth() / 2;
 		centerY = bitmap.getHeight() / 2;
+	}
+	
+	private enum Direction{
+		RIGHT, LEFT, NONE
 	}
 	
 	public int getX(){ return x; }
@@ -44,9 +48,9 @@ public class Player {
 		isMoving = true;
 		
 		if(inputX > GamePanel.Width / 2)
-			moveDirection = "right";
+			moveDirection = Direction.RIGHT;
 		else
-			moveDirection = "left";
+			moveDirection = Direction.LEFT;
 	}
 	
 	public void stopMoving(){
@@ -64,9 +68,9 @@ public class Player {
 		else
 			y -= speedY;
 		if(isMoving){
-			if(moveDirection.equals("right"))
+			if(moveDirection == Direction.RIGHT)
 				x += speedX;
-			else if(moveDirection.equals("left"))
+			else if(moveDirection == Direction.LEFT)
 				x -= speedX;
 		}
 		
@@ -85,9 +89,9 @@ public class Player {
 		matrix.reset();
 		matrix.preTranslate(-centerX, -centerY);
 		
-		if(allowMotion && moveDirection.equals("right"))
+		if(allowMotion && moveDirection == Direction.RIGHT)
 			matrix.setRotate(20);
-		else if(allowMotion && moveDirection.equals("left"))
+		else if(allowMotion && moveDirection == Direction.LEFT)
 			matrix.setRotate(-20);
 		
 		if(!isMoving) { matrix.setRotate(0); }
