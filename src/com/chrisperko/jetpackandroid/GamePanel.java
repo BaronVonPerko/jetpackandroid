@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.chrisperko.jetpackandroid.Sprites.Obstacle;
-import com.example.jetpackandroid.R;
+import com.chrisperko.jetpackandroid.R;
 
 import android.content.Context;
 import android.graphics.Bitmap;
