@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package com.chrisperko.androidgameframework;
+package com.example.jetpackandroid;
 
 public final class R {
     public static final class attr {
