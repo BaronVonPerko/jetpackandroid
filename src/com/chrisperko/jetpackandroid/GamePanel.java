@@ -119,7 +119,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 		}
 	}
 	
-	private void updateGame(Canvas canvas){
+	private void updateGame(Canvas canvas){ //TODO cleanup this method with other classes
 		timeBetweenObstacles = GameSpeed * 2 + 25;
 		currentTimeBetweenObstacles--;
 		
