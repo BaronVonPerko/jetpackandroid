@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Random;
 
 import com.chrisperko.jetpackandroid.Sprites.Obstacle;
+import com.chrisperko.jetpackandroid.gamestatescreens.GameOverScreen;
+import com.chrisperko.jetpackandroid.gamestatescreens.PauseScreen;
+import com.chrisperko.jetpackandroid.gamestatescreens.TitleScreen;
 import com.chrisperko.jetpackandroid.R;
 
 import android.content.Context;
@@ -29,6 +32,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 	private List<Obstacle> obstacles = new ArrayList<Obstacle>();
 	private Random random = new Random();
 	private int money;
+	private TitleScreen titleScreen = new TitleScreen();
+	private PauseScreen pauseScreen = new PauseScreen();
+	private GameOverScreen gameOverScreen = new GameOverScreen();
 	
 	private Bitmap playerBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
 	private Bitmap pauseBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.pause);
@@ -61,42 +67,18 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 			drawGame(canvas);
 			break;
 		case GameOver:
-			drawGameOver(canvas);
+			gameOverScreen.draw(canvas);
 			break;
 		case Paused:
-			drawPaused(canvas);
+			pauseScreen.draw(canvas);
 			break;
 		case TitleScreen:
-			drawTitleScreen(canvas);
+			titleScreen.draw(canvas);
 			break;
 		default:
 			break;
 		}
-	}
-	
-	private void drawPaused(Canvas canvas) {
-		canvas.drawColor(Color.BLACK);
-		Paint paint = new Paint();
-		paint.setTextSize(60);
-		paint.setColor(Color.YELLOW);
-		canvas.drawText("Paused!", 100, 100, paint);
-	}
-	
-	private void drawGameOver(Canvas canvas) {
-		canvas.drawColor(Color.BLACK);
-		Paint paint = new Paint();
-		paint.setTextSize(60);
-		paint.setColor(Color.YELLOW);
-		canvas.drawText("Game Over!", 100, 100, paint);
-	}
-	
-	private void drawTitleScreen(Canvas canvas) {
-		canvas.drawColor(Color.BLACK);
-		Paint paint = new Paint();
-		paint.setTextSize(60);
-		paint.setColor(Color.YELLOW);
-		canvas.drawText("Touch to Play!", 100, 100, paint);
-	}
+	}	
 	
 	private void drawGame(Canvas canvas) {
 		// Clear the screen / prep for drawing new frame
