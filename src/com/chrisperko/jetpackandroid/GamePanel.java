@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.chrisperko.jetpackandroid.Sprites.Obstacle;
+import com.chrisperko.jetpackandroid.Sprites.ObstacleHandler;
 import com.chrisperko.jetpackandroid.gamestatescreens.GameOverScreen;
 import com.chrisperko.jetpackandroid.gamestatescreens.PauseScreen;
 import com.chrisperko.jetpackandroid.gamestatescreens.TitleScreen;
@@ -30,6 +31,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 	private Paint scorePaint = new Paint();
 	private int timeBetweenObstacles, currentTimeBetweenObstacles = 0;
 	private List<Obstacle> obstacles = new ArrayList<Obstacle>();
+	private ObstacleHandler obstacleHandler = new ObstacleHandler();
 	private Random random = new Random();
 	private int money;
 	private TitleScreen titleScreen = new TitleScreen();
@@ -119,7 +121,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 		}
 	}
 	
-	private void updateGame(Canvas canvas){ //TODO cleanup this method with other classes
+	private void updateGame(Canvas canvas){
 		timeBetweenObstacles = GameSpeed * 2 + 25;
 		currentTimeBetweenObstacles--;
 		
@@ -134,34 +136,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 		// Generate new obstacles when the timer has expired
 		if(currentTimeBetweenObstacles <= 0){ 
 			currentTimeBetweenObstacles = timeBetweenObstacles;
-			int obstacleX = 0;
-			int obstacleChance = 6; // Increase to make more obstacles appear
-			boolean containsHole = false;
-			for(int i=0; i < OBSTACLESPOTS; i++){
-				if(i == (OBSTACLESPOTS - 1) && !containsHole)
-					continue;
-				if(random.nextInt(OBSTACLESPOTS) < obstacleChance){
-					Obstacle newObstacle = new Obstacle(obstacleX, OBSTACLESPOTS);
-					newObstacle.initialize();
-					obstacles.add(newObstacle);
-				}
-				else{ containsHole = true; }
-				obstacleX += Width / OBSTACLESPOTS;
-			}
-		}
-		
-		// Update all obstacles
-		List<Obstacle> obstaclesToRemove = new ArrayList<Obstacle>();
-		for(Obstacle obstacle : obstacles){
-			if(obstacle.getY() > (GamePanel.Height + obstacle.getHeight()))
-				obstaclesToRemove.add(obstacle);
-			obstacle.update();
-		}
-		
-		// Remove obstacles
-		for(Obstacle obstacle : obstaclesToRemove){
-			obstacles.remove(obstacle);
-		}
+			obstacleHandler.generateObstacleRow(obstacles, OBSTACLESPOTS);
+		}		
+		obstacleHandler.updateObstacles(obstacles);
 	}
 	
 	public void detectCollisions() {
