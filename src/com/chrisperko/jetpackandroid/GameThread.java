@@ -18,14 +18,6 @@ public class GameThread extends Thread {
 		this.isRunning = running;
 	}
 	
-	public void togglePaused(){
-		this.isPaused = !this.isPaused;
-	}
-	
-	public boolean getIsPaused(){
-		return isPaused;
-	}
-	
 	public void toggleRunning() {
 		this.isRunning = !isRunning;
 	}

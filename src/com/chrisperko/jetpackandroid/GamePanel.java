@@ -38,11 +38,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 	private final int INITGAMESPEED = 8;
 	private final int TEXTSIZE = 34;
 	private final int OBSTACLESPOTS = 10;
+	
+	private enum GameState{
+		Paused, Running, TitleScreen, GameOver;
+	}
+	private GameState currentGameState;
 
 
 	public GamePanel(Context context) {
 		super(context);
 		GameSpeed = INITGAMESPEED;
+		currentGameState = GameState.TitleScreen;
 		scorePaint.setColor(Color.WHITE);
 		scorePaint.setTextSize(TEXTSIZE);
 		getHolder().addCallback(this); // Allow access to the SurfaceHolder
@@ -50,13 +56,56 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 	}
 	
 	public void draw(Canvas canvas){		
-		
+		switch(currentGameState){
+		case Running:
+			drawGame(canvas);
+			break;
+		case GameOver:
+			drawGameOver(canvas);
+			break;
+		case Paused:
+			drawPaused(canvas);
+			break;
+		case TitleScreen:
+			drawTitleScreen(canvas);
+			break;
+		default:
+			break;
+		}
+	}
+	
+	private void drawPaused(Canvas canvas) {
+		canvas.drawColor(Color.BLACK);
+		Paint paint = new Paint();
+		paint.setTextSize(60);
+		paint.setColor(Color.YELLOW);
+		canvas.drawText("Paused!", 100, 100, paint);
+	}
+	
+	private void drawGameOver(Canvas canvas) {
+		canvas.drawColor(Color.BLACK);
+		Paint paint = new Paint();
+		paint.setTextSize(60);
+		paint.setColor(Color.YELLOW);
+		canvas.drawText("Game Over!", 100, 100, paint);
+	}
+	
+	private void drawTitleScreen(Canvas canvas) {
+		canvas.drawColor(Color.BLACK);
+		Paint paint = new Paint();
+		paint.setTextSize(60);
+		paint.setColor(Color.YELLOW);
+		canvas.drawText("Touch to Play!", 100, 100, paint);
+	}
+	
+	private void drawGame(Canvas canvas) {
 		// Clear the screen / prep for drawing new frame
 		canvas.drawColor(Color.BLACK); 
 		
 		// Draw or create the player
 		if(player != null){
-			player.draw(canvas, !gameThread.getIsPaused());
+			boolean allowPlayerMovement = currentGameState == GameState.Running ? true : false;
+			player.draw(canvas, allowPlayerMovement);
 		}
 		else
 			player = new Player(playerBitmap);
@@ -72,7 +121,23 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 		canvas.drawBitmap(pauseBitmap, Width - PAUSEWIDTH, 10, null);
 	}
 	
-	public void update(Canvas canvas){
+	public void update(Canvas canvas) {
+		switch(currentGameState){
+		case GameOver:
+			break;
+		case Paused:
+			break;
+		case Running:
+			updateGame(canvas);
+			break;
+		case TitleScreen:
+			break;
+		default:
+			break;
+		}
+	}
+	
+	private void updateGame(Canvas canvas){
 		timeBetweenObstacles = GameSpeed * 2 + 25;
 		currentTimeBetweenObstacles--;
 		
@@ -141,7 +206,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
 	public void detectDeath(){
 		if(player.getY() > (Height + 10)){
-			gameThread.setRunning(false); // TODO show 'game over' and move to main menu (to be created...)
+			currentGameState = GameState.GameOver;
 		}
 	}
 	
@@ -166,30 +231,50 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
 	public boolean onTouchEvent(MotionEvent event){
 		
+		boolean actionWait = false;
+		
 		if(event.getAction() == MotionEvent.ACTION_DOWN){
 			
-			if(gameThread.getIsPaused())
-				gameThread.togglePaused();
+			if(actionWait) return false;
 			
-			if(!gameThread.getIsPaused() && event.getX() > Width - PAUSEWIDTH && event.getY() < PAUSEHEIGHT)
-				gameThread.togglePaused();
+			// handle press event on game over and title screen - reset game when pressed
+			if(currentGameState == GameState.GameOver || currentGameState == GameState.TitleScreen){
+				player = null;
+				obstacles = new ArrayList<Obstacle>();
+				currentGameState = GameState.Running;
+				gameThread.setRunning(true);
+				return true;
+			}
 			
-			if(!gameThread.getIsPaused())
+			// unpause
+			if(currentGameState == GameState.Paused)
+				currentGameState = GameState.Running;
+			
+			// pause
+			if(currentGameState == GameState.Running 
+					&& event.getX() > Width - PAUSEWIDTH && event.getY() < PAUSEHEIGHT){
+				currentGameState = GameState.Paused;
+				actionWait = true;
+			}			
+			
+			// update player direction of flight
+			if(currentGameState == GameState.Running)
 				player.updateMoveDirection((int)event.getX());			
 			
 			return true;
 		}
 		
-		else if(event.getAction() == MotionEvent.ACTION_MOVE){
-			
+		if(player==null) return false;
+		
+		if(event.getAction() == MotionEvent.ACTION_MOVE){			
 			player.updateMoveDirection((int)event.getX());
 			return true;
 			
 		}
 		
-		else if(event.getAction() == MotionEvent.ACTION_UP){
-			
+		else if(event.getAction() == MotionEvent.ACTION_UP){			
 			player.stopMoving();
+			actionWait = false;
 			return true;
 			
 		}
