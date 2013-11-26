@@ -1,5 +1,5 @@
 /** Automatically generated file. DO NOT MODIFY */
-package com.example.jetpackandroid;
+package com.chrisperko.androidgameframework;
 
 public final class BuildConfig {
     public final static boolean DEBUG = true;

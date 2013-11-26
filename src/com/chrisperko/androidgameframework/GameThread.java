@@ -1,4 +1,4 @@
-package com.chrisperko.jetpackandroid;
+package com.chrisperko.androidgameframework;
 
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;

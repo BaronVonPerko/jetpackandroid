@@ -1,11 +1,11 @@
-package com.chrisperko.jetpackandroid;
+package com.chrisperko.androidgameframework;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import com.chrisperko.jetpackandroid.Sprites.Obstacle;
-import com.example.jetpackandroid.R;
+import com.chrisperko.androidgameframework.R;
+import com.chrisperko.androidgameframework.Sprites.Obstacle;
 
 import android.content.Context;
 import android.graphics.Bitmap;

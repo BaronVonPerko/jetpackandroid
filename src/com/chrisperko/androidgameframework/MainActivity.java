@@ -1,6 +1,6 @@
-package com.chrisperko.jetpackandroid;
+package com.chrisperko.androidgameframework;
 
-import com.example.jetpackandroid.R;
+import com.chrisperko.androidgameframework.R;
 
 import android.os.Bundle;
 import android.app.Activity;

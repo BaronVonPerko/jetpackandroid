@@ -1,5 +1,5 @@
-package com.chrisperko.jetpackandroid.Sprites;
-import com.chrisperko.jetpackandroid.GamePanel;
+package com.chrisperko.androidgameframework.Sprites;
+import com.chrisperko.androidgameframework.GamePanel;
 
 import android.graphics.Canvas;
 import android.graphics.Color;

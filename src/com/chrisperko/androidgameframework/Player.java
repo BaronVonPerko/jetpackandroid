@@ -1,4 +1,4 @@
-package com.chrisperko.jetpackandroid;
+package com.chrisperko.androidgameframework;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
