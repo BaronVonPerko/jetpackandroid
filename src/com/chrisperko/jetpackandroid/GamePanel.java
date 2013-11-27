@@ -48,7 +48,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 	private final int OBSTACLESPOTS = 10;
 	
 	private enum GameState{
-		Paused, Running, TitleScreen, GameOver;
+		Paused, Running, TitleScreen, GameOver, Upgrades;
 	}
 	private GameState currentGameState;
 
@@ -76,6 +76,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 			break;
 		case TitleScreen:
 			titleScreen.draw(canvas);
+			break;
+		case Upgrades:
 			break;
 		default:
 			break;
@@ -115,6 +117,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 			updateGame(canvas);
 			break;
 		case TitleScreen:
+			break;
+		case Upgrades:
 			break;
 		default:
 			break;
