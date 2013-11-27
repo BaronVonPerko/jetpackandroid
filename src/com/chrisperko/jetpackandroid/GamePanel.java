@@ -9,6 +9,7 @@ import com.chrisperko.jetpackandroid.Sprites.ObstacleHandler;
 import com.chrisperko.jetpackandroid.gamestatescreens.GameOverScreen;
 import com.chrisperko.jetpackandroid.gamestatescreens.PauseScreen;
 import com.chrisperko.jetpackandroid.gamestatescreens.TitleScreen;
+import com.chrisperko.jetpackandroid.gamestatescreens.UpgradeScreen;
 import com.chrisperko.jetpackandroid.R;
 
 import android.content.Context;
@@ -37,6 +38,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 	private TitleScreen titleScreen = new TitleScreen();
 	private PauseScreen pauseScreen = new PauseScreen();
 	private GameOverScreen gameOverScreen = new GameOverScreen();
+	private UpgradeScreen upgradeScreen = new UpgradeScreen();
 	
 	private Bitmap playerBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
 	private Bitmap pauseBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.pause);
@@ -78,6 +80,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 			titleScreen.draw(canvas);
 			break;
 		case Upgrades:
+			upgradeScreen.draw(canvas);
 			break;
 		default:
 			break;
